@@ -46,7 +46,7 @@ def generate_productivity_per_operator(df):
 # === Main Execution ===
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
-    if "Date" in df.columns:
+if "Date" in df.columns:
     df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
 else:
     st.warning("⚠️ No 'Date' column found in this dataset. Skipping date processing.")
@@ -136,4 +136,5 @@ else:
         file_name="agentic_report.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
 
