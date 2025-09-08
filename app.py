@@ -47,7 +47,8 @@ def generate_productivity_per_operator(df):
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
 # --- Handle Date Column Flexibly ---
-date_cols = [col for col in df.columns if "date" in col.lower() or "time" in col.lower()]
+date_cols = [col for col in df.columns if "date" in str(col).lower() or "time" in str(col).lower()]
+
 
 if date_cols:
     # Convert the first detected date column
@@ -142,6 +143,7 @@ else:
         file_name="agentic_report.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
 
 
 
