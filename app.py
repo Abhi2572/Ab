@@ -46,18 +46,17 @@ def generate_productivity_per_operator(df):
 # === Main Execution ===
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
-if "Date" in df.columns:
-    # Detect a date column automatically
-    date_cols = [col for col in df.columns if "date" in col.lower() or "time" in col.lower()]
+# --- Handle Date Column Flexibly ---
+date_cols = [col for col in df.columns if "date" in col.lower() or "time" in col.lower()]
 
 if date_cols:
-    # Use the first matching column
+    # Convert the first detected date column
     df[date_cols[0]] = pd.to_datetime(df[date_cols[0]], errors="coerce")
-    # Rename it to "Date" so rest of the code works
+    # Rename it to "Date" for consistency
     df.rename(columns={date_cols[0]: "Date"}, inplace=True)
 else:
-    # If no date column, continue without breaking
-    st.warning("⚠️ No column with 'Date' or 'Time' found in dataset. Skipping date processing.")
+    st.warning("⚠️ No 'Date' or 'Time' column found in dataset. Skipping date processing.")
+
 
     st.success("✅ File loaded successfully!")
     st.subheader("📋 Data Preview")
@@ -143,6 +142,7 @@ else:
         file_name="agentic_report.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
 
 
 
