@@ -44,9 +44,18 @@ def generate_productivity_per_operator(df):
     return df[["Product Type", "Shift", "Productivity"]].groupby(["Product Type", "Shift"]).mean().reset_index()
 
 # === Main Execution ===
+uploaded_file = st.file_uploader("📂 Upload your manufacturing data", type=["csv", "xlsx"])
+
 if uploaded_file:
-    df = pd.read_csv(uploaded_file)
-    df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
+    # Read the file
+    if uploaded_file.name.endswith(".csv"):
+        df = pd.read_csv(uploaded_file)
+    else:
+        df = pd.read_excel(uploaded_file)
+
+    # Handle Date safely
+    if "Date" in df.columns:
+        df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
 
     st.success("✅ File loaded successfully!")
     st.subheader("📋 Data Preview")
@@ -54,6 +63,13 @@ if uploaded_file:
 
     st.divider()
     st.header("📊 Agent Reports & Visualizations")
+
+    # 👉 All analysis and charts go here, inside this block
+    # st.bar_chart(df["Units"]) or whatever reports you have
+
+else:
+    st.info("ℹ️ Please upload a dataset to get started.")
+
 
     # 1. Units by Product Type
     st.subheader("Units by Product Type")
@@ -132,3 +148,4 @@ if uploaded_file:
         file_name="agentic_report.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
