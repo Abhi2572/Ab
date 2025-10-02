@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from pandas import ExcelWriter
 import io
 
-st.set_page_config(page_title="Agentic Report Generator", layout="narrow")
+st.set_page_config(page_title="Agentic Report Generator", layout="wide")
 st.title("🤖 Agentic AI – Manufacturing Report Generator")
 
 uploaded_file = st.file_uploader("📤 Upload your manufacturing CSV file", type=["csv"])
@@ -133,5 +133,6 @@ if uploaded_file:
         file_name="agentic_report.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
 
 
