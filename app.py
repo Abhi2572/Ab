@@ -59,7 +59,7 @@ if uploaded_file:
     # 1. Units by Product Type
     st.subheader("Units by Product Type")
     units = generate_units_by_product(df)
-    st.dataframe(units, use_container_width=False)
+    st.dataframe(units, use_container_width=True)
     fig1, ax1 = plt.subplots()
     units.plot(kind='bar', x='Product Type', y='Units Produced', ax=ax1)
     st.pyplot(fig1)
@@ -133,8 +133,3 @@ if uploaded_file:
         file_name="agentic_report.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
-
-
-
-
-
