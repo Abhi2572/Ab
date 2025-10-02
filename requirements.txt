@@ -2,3 +2,5 @@ streamlit
 pandas
 matplotlib
 openpyxl
+smtplib
+email
