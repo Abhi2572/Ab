@@ -3,12 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pandas import ExcelWriter
 import io
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-from email.mime.text import MIMEText
-from email import encoders
-import os
 
 st.set_page_config(page_title="Agentic Report Generator", layout="wide")
 st.title("🤖 Agentic AI – Manufacturing Report Generator")
@@ -48,35 +42,6 @@ def generate_productivity_per_operator(df):
     df = df.copy()
     df["Productivity"] = df["Units Produced"] / (df["Operator Count"] * df["Production Time Hours"])
     return df[["Product Type", "Shift", "Productivity"]].groupby(["Product Type", "Shift"]).mean().reset_index()
-
-def send_report_via_email(sender_email, sender_password, recipient_email, report_path):
-    msg = MIMEMultipart()
-    msg['From'] = sender_email
-    msg['To'] = recipient_email
-    msg['Subject'] = "Manufacturing Report"
-
-    body = "Hello,\n\nHere is your requested manufacturing report attached.\n\nRegards,\nYour AI System"
-    msg.attach(MIMEText(body, 'plain'))
-
-    # Attach file
-    with open(report_path, "rb") as f:
-        part = MIMEBase('application', 'octet-stream')
-        part.set_payload(f.read())
-    encoders.encode_base64(part)
-    part.add_header(
-        'Content-Disposition',
-        f'attachment; filename={os.path.basename(application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)}'
-    )
-    msg.attach(part)
-
-    # SMTP server details (example for Gmail)
-    smtp_server = "abth110405@gmail.com"
-    smtp_port = 587
-    server = smtplib.SMTP(smtp_server, smtp_port)
-    server.starttls()
-    server.login(sender_email, sender_password)
-    server.send_message(msg)
-    server.quit()
 
 # === Main Execution ===
 if uploaded_file:
@@ -168,14 +133,3 @@ if uploaded_file:
         file_name="agentic_report.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
-
-
-recipient = request.form.get("email")  # or wherever you get the target email
-sender_email = os.getenv("221260132002setiict@gmail.com")
-sender_password = os.getenv("952004")
-if recipient:
-    try:
-        send_report_via_email(sender_email, sender_password, recipient, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
-    except Exception as e:
-        # log error, but don’t break user download
-        app.logger.error(f"Email send failed: {e}")
